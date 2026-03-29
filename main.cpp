@@ -21,17 +21,29 @@
 
 #include <iostream>
 #include <string>
+#include <limits>
 #include "MultiplierArray.h"
 
 int main(){
     int a;
     int b;
-    
+
     std::cout << "Enter A: ";
-    std::cin >> a;
+
+    while(!(std::cin >> a) || a<=0){
+        std::cout << "Invalid input. Please try again: ";
+
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
 
     std::cout << std::endl << "Enter B: ";
-    std::cin >> b;
+    while(!(std::cin >> b) || b<=0) {
+        std::cout << "Invalid input. Please try again: ";
+
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
 
     int choice = 0;
 
@@ -42,25 +54,27 @@ int main(){
         std::cout << "3. Quit" << std::endl;
         std::cout << "Enter Choice: ";
 
-        std::cin >> choice;
 
-        if (choice == 1) {
-            MultiplierArray result = MultiplierArray(a) * MultiplierArray(b); // this is using the class overloaded * operator which implements the karatsuba algorithm
-            std::cout << "A * B = " << result.toString() << std::endl;
+        while(!(std::cin >> choice)){
+            std::cout << "Invalid input. Please try again: ";
+
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-
-        else if (choice == 2) {
-            MultiplierArray result = MultiplierArray::exponentiation(a, b); // this is using the class overloaded * operator which implements the karatsuba algorithm
-            std::cout << "A ^ B = " << result.toString() << std::endl;
-        }
-
-        else if (choice == 3) {
-            std::cout << "Exiting program." << std::endl;
-            break;
-        } 
-        
-        else {
-            std::cout << "Invalid choice. Please try again." << std::endl;
+        MultiplierArray result;
+        switch (choice) {
+            case 1:
+                result = MultiplierArray(a) * MultiplierArray(b); // this is using the class overloaded * operator which implements the karatsuba algorithm
+                std::cout << "A * B = " << result.toString() << std::endl;
+                break;
+            case 2:
+                result = MultiplierArray::exponentiation(a, b); // this is using the class overloaded * operator which implements the karatsuba algorithm
+                std::cout << "A ^ B = " << result.toString() << std::endl;
+            case 3:
+                std::cout << "Exiting program." << std::endl;
+                break;
+            default:
+                std::cout << "Invalid choice. Please try again." << std::endl;
         }
     }
 
