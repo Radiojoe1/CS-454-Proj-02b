@@ -61,7 +61,7 @@ int main(){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-        MultiplierArray result;
+        MultiplierArray result, result2;
         switch (choice) {
             case 1:
                 result = MultiplierArray(a) * MultiplierArray(b); // this is using the class overloaded * operator which implements the karatsuba algorithm
@@ -69,8 +69,10 @@ int main(){
                 break;
             case 2:
                 result = MultiplierArray::exponentiation(a, b); // this is using the class overloaded * operator which implements the karatsuba algorithm
-                std::cout << "A ^ B = " << result.toString() << std::endl;
-            case 3:
+                result2 = SchoolyardMultArray::exponentiation(a, b);
+                std::cout << "A ^ B = " << result.toString() << ", \n" << "A ^ B 2: " << result2.toString() << std::endl;
+                break;
+                case 3:
                 std::cout << "Exiting program." << std::endl;
                 break;
             default:

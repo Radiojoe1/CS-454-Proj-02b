@@ -216,3 +216,48 @@ MultiplierArray MultiplierArray::exponentiation(int base, int exponent){
 
     return squared * MultiplierArray(base);
 }
+
+
+MultiplierArray::Digits SchoolyardMultArray::SchoolyardMult(const MultiplierArray::Digits &a, const MultiplierArray::Digits &b) {
+    MultiplierArray::Digits out;
+    MultiplierArray::Digits larger, smaller;
+    if (a.size() > b.size()) {
+        larger = a;
+        smaller = b;
+    } else {
+        larger = b;
+        smaller = a;
+    }
+    int shiftCount = 0;
+    for (int i = smaller.size()-1; i >= 0; ++i) {
+
+        out = addDigits(out,
+                        shiftLeftDigits(SingleMult(smaller[i], larger),
+                        shiftCount));
+        shiftCount++;
+    }
+    return out;
+}
+
+MultiplierArray::Digits SchoolyardMultArray::SingleMult
+(const int value, const MultiplierArray::Digits &arr)
+{
+    MultiplierArray::Digits out(arr.size(), 0);
+    int carry = 0;
+
+    for (int i = arr.size() - 1; i >= 0; --i) {
+        int total = value * arr[i] + carry;
+        out[i] = total % 10;
+        carry = total / 10;
+    }
+
+    if (carry > 0) {
+        out.insert(out.begin(), carry);
+    }
+
+    return trimLeadingZeroes(out);
+    }
+
+SchoolyardMultArray SchoolyardMultArray::operator*(const SchoolyardMultArray &rhs) const {
+    return SchoolyardMultArray(SchoolyardMult(contents, rhs.contents));
+}

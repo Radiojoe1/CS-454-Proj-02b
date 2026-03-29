@@ -7,6 +7,7 @@
 #include <string>
 #include <utility>
 
+
 class MultiplierArray{
     public:
         //constructors
@@ -23,12 +24,12 @@ class MultiplierArray{
         //output
         std::string toString() const;
     
-    private:
+    protected:
         using Digits = std::vector<int>;
 
         Digits contents;
         
-        MultiplierArray(const Digits& digits);
+        explicit MultiplierArray(const Digits& digits);
 
         static Digits intToDigits(int input);
         static Digits trimLeadingZeroes(const Digits& in);
@@ -38,6 +39,17 @@ class MultiplierArray{
         static Digits shiftLeftDigits(const Digits& in, int places);
         static std::pair<Digits, Digits> splitDigits(const Digits& in);
         static Digits karatsuba_mult(const Digits&a, const Digits& b);
+};
+
+class SchoolyardMultArray : public MultiplierArray{
+        public:
+                using MultiplierArray::MultiplierArray;
+                SchoolyardMultArray operator*(const SchoolyardMultArray& rhs) const;
+
+        private:
+                static Digits SchoolyardMult(const Digits&a, const Digits& b);
+
+                static Digits SingleMult(const int value, const Digits& b);
 };
 
 #endif
