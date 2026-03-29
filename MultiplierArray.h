@@ -47,7 +47,12 @@ public:
         auto p2 = left.first * right.first;
         auto p3 = ((left.first + left.second) * (right.first + right.second)-p1)-p2;
 
-
+        auto out1 = p1;
+        out1.shift(this->size());
+        auto out2 = p3-p2;
+        out2 = out2-p1;
+        out2.shift(this->size()/2);
+        return out1+out2+p2;
     }
 
     void shift(int shiftAmount){
@@ -109,7 +114,8 @@ public:
             left = 0;
             right = 0;
             if(product < 0){
-                
+                left = -1;
+                product += 10;
             }
             out.push_back(product);
         }
