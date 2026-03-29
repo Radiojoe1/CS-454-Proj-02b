@@ -49,7 +49,7 @@ class SchoolyardMultArray : public MultiplierArray{
         private:
                 static Digits SchoolyardMult(const Digits&a, const Digits& b);
 
-                static Digits SingleMult(const int value, const Digits& b);
+                static Digits SingleMult(int value, const Digits& b);
 };
 
 #endif

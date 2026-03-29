@@ -217,11 +217,12 @@ MultiplierArray MultiplierArray::exponentiation(int base, int exponent){
     return squared * MultiplierArray(base);
 }
 
+// SCHOOLYARD Array below:
 
 MultiplierArray::Digits SchoolyardMultArray::SchoolyardMult(const MultiplierArray::Digits &a, const MultiplierArray::Digits &b) {
     MultiplierArray::Digits out;
     MultiplierArray::Digits larger, smaller;
-    if (a.size() > b.size()) {
+    if (a.size() > b.size()) { // choose the smaller item to iterate through first.
         larger = a;
         smaller = b;
     } else {
@@ -233,7 +234,7 @@ MultiplierArray::Digits SchoolyardMultArray::SchoolyardMult(const MultiplierArra
 
         out = addDigits(out,
                         shiftLeftDigits(SingleMult(smaller[i], larger),
-                        shiftCount));
+                        shiftCount)); // add out and the individual multiplication of that value by the larger digit with a place offset.
         shiftCount++;
     }
     return out;
@@ -245,7 +246,7 @@ MultiplierArray::Digits SchoolyardMultArray::SingleMult
     MultiplierArray::Digits out(arr.size(), 0);
     int carry = 0;
 
-    for (int i = arr.size() - 1; i >= 0; --i) {
+    for (int i = arr.size() - 1; i >= 0; --i) { // iterate through the array and progressively multiply up the array by "value"
         int total = value * arr[i] + carry;
         out[i] = total % 10;
         carry = total / 10;
@@ -253,7 +254,7 @@ MultiplierArray::Digits SchoolyardMultArray::SingleMult
 
     if (carry > 0) {
         out.insert(out.begin(), carry);
-    }
+    } // if the nultiplication results in an extra digit
 
     return trimLeadingZeroes(out);
     }
