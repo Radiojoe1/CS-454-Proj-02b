@@ -45,7 +45,7 @@ class SchoolyardMultArray : public MultiplierArray{
         public:
                 using MultiplierArray::MultiplierArray;
                 SchoolyardMultArray operator*(const SchoolyardMultArray& rhs) const;
-
+                static SchoolyardMultArray exponentiation(int base, int exponent);
         private:
                 static Digits SchoolyardMult(const Digits&a, const Digits& b);
 

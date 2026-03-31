@@ -19,6 +19,12 @@ Cmake file:
     MultiplierArray.cpp
     MultiplierArray.h)
 
+Once the program is running:
+    Choose values for A & B, and then choose the algorithm you wish to return based off of the
+    prompt on the screen. Additional to the required option, an input of 4 will run the program
+    required by the extra credit assignment. To view a graph of the produced values, open 
+    "csv display.html" and open the produced "Output.csv" file.
+
 Extra Credit:
     Compute the time taken for evaluating A^B using this O(n^2) algorithm for multiplication.
     Compare it to the time taken using the O(n^1.585) karatsuba algorithm for multiplication.
@@ -44,3 +50,8 @@ Extra Credit:
     At what value of n is it evident that the karatsuba algorithm for multiplication
     is superior to the O(n2) method of multiplication?
 
+    The value at which karatsuba becomes more efficient is unclear, as 999^999 still showed the
+    traditional method of multiplication to be faster. We suspect that exxessive copying & 
+    assignment is to blame for the slow algorithm, though there is likely still a point at which 
+    Karatsuba beats the traditional algorithm for speed.
+    

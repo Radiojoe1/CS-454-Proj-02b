@@ -30,7 +30,7 @@
 
 using Clock = std::chrono::steady_clock;
 
-using Duration = std::chrono::duration<double, std::nano>;
+using Duration = std::chrono::duration<double, std::milli>;
 
 template <typename Func>
 Duration measureExecutionTime(Func func, const int& A, const int& B) {
@@ -52,7 +52,7 @@ int main(){
 
     std::cout << "Enter A: ";
 
-    while(!(std::cin >> a) || a<=0) || a > 10000) {
+    while((!(std::cin >> a) || a<=0) || a > 10000) {
         std::cout << "Invalid input. Please try again: ";
 
         std::cin.clear();
@@ -60,14 +60,13 @@ int main(){
     }
 
     std::cout << std::endl << "Enter B: ";
-    while(!(std::cin >> b) || b<=0) || b > 10000) {
+    while((!(std::cin >> b) || b<=0) || b > 10000) {
         std::cout << "Invalid input. Please try again: ";
 
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
-    int choice = 0;
 
     while (true) {
         std::cout << std::endl << "Select an Option:" << std::endl;
@@ -76,7 +75,7 @@ int main(){
         std::cout << "3. Quit" << std::endl;
         std::cout << "4. Extra credit calculation" << std::endl;
         std::cout << "Enter Choice: ";
-
+        int choice = 0;
 
         while(!(std::cin >> choice)){
             std::cout << "Invalid input. Please try again: ";
@@ -107,30 +106,44 @@ int main(){
                     std::cerr << "Error opening file!" << std::endl;
                     break;
                 }
-                int aInt = 99;
-                outFile << "n,school,karatsuba\n";
 
+                std::vector<Duration> schoolTime, karatsubaTime;
+                std::vector<int> ArrayOfN;
+                int aInt = 999;
+                for(int bInt = 9; bInt<= 999; bInt+=10){
                 for(int bInt = 9; bInt <= 999; bInt += 10){
                     std::cout << bInt << std::endl;
-
-                    auto school = measureExecutionTime(SchoolyardMultArray::exponentiation, aInt, bInt);
-                    auto karatsuba = measureExecutionTime(MultiplierArray::exponentiation, aInt, bInt);
-                    int n = static_cast<int>(std::floor(bInt * std::log10(aInt))) + 1;
-                    // measure the time of the algorithms and create n
-
-                    outFile << n << ','
-                            << school.count() << ','
-                            << karatsuba.count() << '\n';
+                    schoolTime.push_back(measureExecutionTime(SchoolyardMultArray::exponentiation, aInt, bInt));
+                    karatsubaTime.push_back(measureExecutionTime(MultiplierArray::exponentiation, aInt, bInt));
+                    ArrayOfN.push_back(static_cast<int>(std::floor(bInt * std::log10(aInt))) + 1);
                 }
-                outFile.close();
-                std::cout << "write finished\n";
+
+                if(schoolTime.size() == karatsubaTime.size() && ArrayOfN.size() == schoolTime.size()){
+                    std::cout << "Success, writing to file\n";
+                    outFile << "impl, n, TimeTaken\n";
+                    for(size_t j = 0; j < karatsubaTime.size(); j++){
+                        outFile << "Karatsuba,"
+                                << ArrayOfN.at(j) << ','
+                                << karatsubaTime.at(j).count() << '\n';
+                    }
+                    for(size_t j = 0; j < schoolTime.size(); j++){
+                        outFile << "School,"
+                                << ArrayOfN.at(j) << ','
+                                << schoolTime.at(j).count() << ','
+                                << '\n';
+                    }
+                    outFile.close();
+                    std::cout << "write finished\n";
+                } else{
+                    std::cout << "Error writing\n";
+                }
+
                 break;
             }
-            default:
-                std::cout << "Invalid choice. Please try again." << std::endl;
-                break;
+                std::cout << "Try again\n";
         }
     }
 
     return 0;
+}
 }

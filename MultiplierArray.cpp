@@ -1,5 +1,6 @@
 #include "MultiplierArray.h"
 #include <algorithm>
+#include "iostream"
 
 MultiplierArray::MultiplierArray() : contents{0} {}
 
@@ -219,7 +220,28 @@ MultiplierArray MultiplierArray::exponentiation(int base, int exponent){
 
 // SCHOOLYARD Array below:
 
-MultiplierArray::Digits SchoolyardMultArray::SchoolyardMult(const MultiplierArray::Digits &a, const MultiplierArray::Digits &b) {
+SchoolyardMultArray SchoolyardMultArray::exponentiation(int base, int exponent){
+    //base cases
+    if (exponent == 0) {
+        return SchoolyardMultArray(1);
+    }
+
+    if (exponent == 1) {
+        return SchoolyardMultArray(base);
+    }
+
+    SchoolyardMultArray halfPower = exponentiation(base, exponent / 2);
+    SchoolyardMultArray squared = halfPower * halfPower; // this is using the overloaded operator for the Multiplier array class, not the built in one
+
+    if (exponent % 2 == 0){
+        return squared;
+    }
+
+    return squared * SchoolyardMultArray(base);
+}
+
+MultiplierArray::Digits SchoolyardMultArray::SchoolyardMult
+(const MultiplierArray::Digits &a, const MultiplierArray::Digits &b)  {
     MultiplierArray::Digits out;
     MultiplierArray::Digits larger, smaller;
     if (a.size() > b.size()) { // choose the smaller item to iterate through first.
@@ -230,7 +252,7 @@ MultiplierArray::Digits SchoolyardMultArray::SchoolyardMult(const MultiplierArra
         smaller = a;
     }
     int shiftCount = 0;
-    for (int i = smaller.size()-1; i >= 0; ++i) {
+    for (int i = smaller.size()-1; i >= 0; i--) {
 
         out = addDigits(out,
                         shiftLeftDigits(SingleMult(smaller[i], larger),
