@@ -98,7 +98,7 @@ int main(){
                 std::cout << "Exiting program." << std::endl;
                 return 0;
             case 4: {
-                std::cout << "Running Extra Credit Process. A is locked to 99, and B iterates from 9 to 999 on 10's\n";
+                std::cout << "Running Extra Credit Process. A is locked to 99, and B iterates from 9 to 999 in increments of 10.\n";
                 std::ofstream outFile("output.csv");
 
                 if (outFile.is_open()) {
