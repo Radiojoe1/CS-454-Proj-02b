@@ -25,6 +25,7 @@
 #include <chrono>
 #include <cmath>
 #include <fstream>
+#include <vector>
 #include "MultiplierArray.h"
 
 using Clock = std::chrono::steady_clock;
@@ -51,7 +52,7 @@ int main(){
 
     std::cout << "Enter A: ";
 
-    while(!(std::cin >> a) || a<=0){
+    while(!(std::cin >> a) || a<=0) || a > 10000{
         std::cout << "Invalid input. Please try again: ";
 
         std::cin.clear();
@@ -59,7 +60,7 @@ int main(){
     }
 
     std::cout << std::endl << "Enter B: ";
-    while(!(std::cin >> b) || b<=0) {
+    while(!(std::cin >> b) || b<=0) || b > 10000 {
         std::cout << "Invalid input. Please try again: ";
 
         std::cin.clear();
@@ -95,10 +96,9 @@ int main(){
                 break;
             case 3:
                 std::cout << "Exiting program." << std::endl;
-                exit(1);
-                break;
+                return 0;
             case 4: {
-                std::cout << "Running Extra Credit Process. A is locked to 999, and B iterates from 9 to 999 on 10's\n";
+                std::cout << "Running Extra Credit Process. A is locked to 99, and B iterates from 9 to 999 on 10's\n";
                 std::ofstream outFile("output.csv");
 
                 if (outFile.is_open()) {
@@ -110,7 +110,7 @@ int main(){
                 int aInt = 99;
                 outFile << "n,school,karatsuba\n";
 
-                for(int bInt = 1; bInt <= 999; bInt += 9){
+                for(int bInt = 9; bInt <= 999; bInt += 10){
                     std::cout << bInt << std::endl;
 
                     auto school = measureExecutionTime(SchoolyardMultArray::exponentiation, aInt, bInt);
