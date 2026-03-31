@@ -107,11 +107,8 @@ int main(){
                     std::cerr << "Error opening file!" << std::endl;
                     break;
                 }
-
-                std::vector<Duration> schoolTime, karatsubaTime;
-                std::vector<int> ArrayOfN;
                 int aInt = 99;
-                outFile << "n, school, karatsuba\n";
+                outFile << "n,school,karatsuba\n";
 
                 for(int bInt = 1; bInt <= 999; bInt += 9){
                     std::cout << bInt << std::endl;
@@ -119,10 +116,7 @@ int main(){
                     auto school = measureExecutionTime(SchoolyardMultArray::exponentiation, aInt, bInt);
                     auto karatsuba = measureExecutionTime(MultiplierArray::exponentiation, aInt, bInt);
                     int n = static_cast<int>(std::floor(bInt * std::log10(aInt))) + 1;
-
-                    schoolTime.push_back(school);
-                    karatsubaTime.push_back(karatsuba);
-                    ArrayOfN.push_back(n);
+                    // measure the time of the algorithms and create n
 
                     outFile << n << ','
                             << school.count() << ','
