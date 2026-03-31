@@ -92,7 +92,7 @@ int main(){
                 break;
             case 2:
                 result = MultiplierArray::exponentiation(a, b); // this is using the class overloaded * operator which implements the karatsuba algorithm
-                std::cout << "A ^ B = " << result.toString() << ", \n";
+                std::cout << "A ^ B = " << result.toString() << std::endl;
                 break;
             case 3:
                 std::cout << "Exiting program." << std::endl;
