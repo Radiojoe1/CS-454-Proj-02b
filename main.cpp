@@ -29,7 +29,7 @@
 
 using Clock = std::chrono::steady_clock;
 
-using Duration = std::chrono::duration<double, std::milli>;
+using Duration = std::chrono::duration<double, std::nano>;
 
 template <typename Func>
 Duration measureExecutionTime(Func func, const int& A, const int& B) {
@@ -112,6 +112,7 @@ int main(){
                 std::vector<int> ArrayOfN;
                 int aInt = 999;
                 for(int bInt = 9; bInt<= 999; bInt+=10){
+                    std::cout << bInt << std::endl;
                     schoolTime.push_back(measureExecutionTime(SchoolyardMultArray::exponentiation, aInt, bInt));
                     karatsubaTime.push_back(measureExecutionTime(MultiplierArray::exponentiation, aInt, bInt));
                     ArrayOfN.push_back(static_cast<int>(std::floor(bInt * std::log10(aInt))) + 1);
