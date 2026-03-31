@@ -110,28 +110,26 @@ int main(){
 
                 std::vector<Duration> schoolTime, karatsubaTime;
                 std::vector<int> ArrayOfN;
-                int aInt = 999;
-                for(int bInt = 9; bInt<= 999; bInt+=10){
+                int aInt = 99;
+                outFile << "n, school, karatsuba\n";
+
+                for(int bInt = 1; bInt <= 999; bInt += 9){
                     std::cout << bInt << std::endl;
-                    schoolTime.push_back(measureExecutionTime(SchoolyardMultArray::exponentiation, aInt, bInt));
-                    karatsubaTime.push_back(measureExecutionTime(MultiplierArray::exponentiation, aInt, bInt));
-                    ArrayOfN.push_back(static_cast<int>(std::floor(bInt * std::log10(aInt))) + 1);
-                }
 
-                if(schoolTime.size() == karatsubaTime.size() && ArrayOfN.size() == schoolTime.size()){
-                    std::cout << "Success, writing to file\n";
-                    outFile << "n, school, karatsuba\n";
-                    for(size_t j = 0; j < schoolTime.size(); j++){
-                        outFile << ArrayOfN.at(j) << ','
-                                << schoolTime.at(j).count() << ','
-                                << karatsubaTime.at(j).count() << '\n';
-                    }
-                    outFile.close();
-                    std::cout << "write finished\n";
-                } else{
-                    std::cout << "Error writing\n";
-                }
+                    auto school = measureExecutionTime(SchoolyardMultArray::exponentiation, aInt, bInt);
+                    auto karatsuba = measureExecutionTime(MultiplierArray::exponentiation, aInt, bInt);
+                    int n = static_cast<int>(std::floor(bInt * std::log10(aInt))) + 1;
 
+                    schoolTime.push_back(school);
+                    karatsubaTime.push_back(karatsuba);
+                    ArrayOfN.push_back(n);
+
+                    outFile << n << ','
+                            << school.count() << ','
+                            << karatsuba.count() << '\n';
+                }
+                outFile.close();
+                std::cout << "write finished\n";
                 break;
             }
             default:
