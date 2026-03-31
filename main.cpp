@@ -52,7 +52,7 @@ int main(){
 
     std::cout << "Enter A: ";
 
-    while(!(std::cin >> a) || a<=0) || a > 10000{
+    while(!(std::cin >> a) || a<=0) || a > 10000) {
         std::cout << "Invalid input. Please try again: ";
 
         std::cin.clear();
@@ -60,7 +60,7 @@ int main(){
     }
 
     std::cout << std::endl << "Enter B: ";
-    while(!(std::cin >> b) || b<=0) || b > 10000 {
+    while(!(std::cin >> b) || b<=0) || b > 10000) {
         std::cout << "Invalid input. Please try again: ";
 
         std::cin.clear();
